@@ -18,7 +18,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Builder
 public class User implements UserDetails {
@@ -41,10 +42,21 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Builder
+    public User(String email, UUID id, String password, String fullName, String role, LocalDateTime createdAt) {
+        this.email = email;
+        this.id = id;
+        this.password = password;
+        this.fullName = fullName;
+        this.role = role != null ? role : "USER";
+        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
+
 
 
     @Override

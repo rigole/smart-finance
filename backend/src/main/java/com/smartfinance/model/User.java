@@ -43,7 +43,7 @@ public class User implements UserDetails {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Builder
-    public User(String email, UUID id, String password, String fullName, String role, LocalDateTime createdAt) {
+    public User(UUID id, String email,  String password, String fullName, String role, LocalDateTime createdAt) {
         this.email = email;
         this.id = id;
         this.password = password;

@@ -16,6 +16,6 @@ public class TransactionResponse {
     private String description;
     private LocalDate date;
     private String type;
-    private String CategoryName;
+    private String categoryName;
     private LocalDateTime createdAt;
 }

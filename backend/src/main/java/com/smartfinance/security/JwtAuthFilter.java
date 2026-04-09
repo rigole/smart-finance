@@ -15,9 +15,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import java.io.IOException;
-
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -34,8 +34,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-          filterChain.doFilter(request, response);
-          return;
+            filterChain.doFilter(request, response);
+            return;
         }
 
         final String token = authorizationHeader.substring(7);

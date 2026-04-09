@@ -230,7 +230,7 @@ ng serve
 ## 📅 Roadmap
 
 - [x] Project setup & Docker configuration
-- [ ] JWT Authentication (register/login)
+- [x] JWT Authentication (register/login)
 - [ ] Transaction CRUD API
 - [ ] Angular dashboard with charts
 - [ ] Budget management

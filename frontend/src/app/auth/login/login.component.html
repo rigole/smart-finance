@@ -1,1 +1,76 @@
-<p>login works!</p>
+<div class="login-container">
+
+  <mat-card class="login-card">
+    <div class="login-header">
+      <div class="logo">💰</div>
+      <h1>Smart Finance</h1>
+      <p>Sign in to your account</p>
+    </div>
+
+    <mat-card-content>
+
+      <div class="error-message" *ngIf="errorMessage">
+        <mat-icon>error_outline</mat-icon>
+        {{ errorMessage }}
+      </div>
+
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput
+                 type="email"
+                 formControlName="email"
+                 placeholder="john@example.com">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="email?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="email?.hasError('email')">
+            Please enter a valid email
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput
+                 [type]="hidePassword ? 'password' : 'text'"
+                 formControlName="password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button"
+                  (click)="hidePassword = !hidePassword">
+            <mat-icon>
+              {{ hidePassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </button>
+          <mat-error *ngIf="password?.hasError('required')">
+            Password is required
+          </mat-error>
+          <mat-error *ngIf="password?.hasError('minlength')">
+            Password must be at least 6 characters
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                class="full-width submit-btn"
+                [disabled]="loginForm.invalid || isLoading">
+          <mat-spinner diameter="20"
+                       *ngIf="isLoading"
+                       class="spinner">
+          </mat-spinner>
+          <span *ngIf="!isLoading">Sign In</span>
+          <span *ngIf="isLoading">Signing in...</span>
+        </button>
+
+      </form>
+
+      <div class="register-link">
+        Don't have an account?
+        <a routerLink="/register">Create one</a>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>

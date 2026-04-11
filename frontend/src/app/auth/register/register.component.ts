@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -7,6 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -25,11 +28,12 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class RegisterComponent {
 
-    loginForm: FormGroup;
-    isLoading = false;
-    hidePassword = true;
-    errorMessage = '';
-    constructor(
+  loginForm: FormGroup;
+  isLoading = false;
+  hidePassword = true;
+  formValueSignal!: Signal<any>;
+  errorMessage = '';
+  constructor(
     private fb: FormBuilder,
     private router: Router
   ) {
@@ -38,10 +42,15 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+    this.formValueSignal = toSignal(this.loginForm.valueChanges, {
+      initialValue: this.loginForm.value
+    });
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) return;
+
+
+    /*if (this.loginForm.invalid) return;
 
     this.isLoading = true;
     this.errorMessage = '';
@@ -50,6 +59,7 @@ export class RegisterComponent {
       this.isLoading = false;
 
     }, 1000);
+    */
   }
 
   get email() { return this.loginForm.get('email'); }
@@ -59,3 +69,5 @@ export class RegisterComponent {
 
 
 }
+
+

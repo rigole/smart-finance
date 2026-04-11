@@ -10,7 +10,8 @@ import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {  MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogService } from '../../shared/services/confirm-dialog.service';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ import {  MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
- private _snackBar = inject(MatSnackBar);
+  private _snackBar = inject(MatSnackBar);
 
   loginForm: FormGroup;
   isLoading = false;
@@ -38,7 +39,8 @@ export class RegisterComponent {
   errorMessage = '';
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private confirmDialogService: ConfirmDialogService
   ) {
     this.loginForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -51,6 +53,17 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+
+    this.confirmDialogService.open({
+      title: 'Register User',
+      message: 'Are you sure you want to register this user?',
+      confirmText: 'Yes, Register',
+      cancelText: 'Cancel'
+    }).subscribe(confirmed => {
+      if (confirmed) {
+        console.log("it is working") // your existing logic
+      }
+    });
 
 
     /*if (this.loginForm.invalid) return;

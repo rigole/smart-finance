@@ -13,6 +13,7 @@
 
 ## 📸 Screenshots
 ![alt text](image.png)
+![alt text](image-2.png)
 ![alt text](image-1.png)
 > _Coming soon — dashboard, transactions page, and AI insights view_
 

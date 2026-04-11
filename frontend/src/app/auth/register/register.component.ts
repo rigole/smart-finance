@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Signal } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,8 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction } from '@angular/material/snack-bar';
+import {  MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -21,12 +22,14 @@ import { MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction } from '@angula
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatDialogModule,
     MatProgressSpinnerModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+ private _snackBar = inject(MatSnackBar);
 
   loginForm: FormGroup;
   isLoading = false;

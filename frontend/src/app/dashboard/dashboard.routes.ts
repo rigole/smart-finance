@@ -5,5 +5,4 @@ export const dashboardRoutes = [
         loadComponent: () => import('./home/home.component').
         then(m => m.HomeComponent)
     }
-    
 ];

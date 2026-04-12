@@ -18,6 +18,25 @@ export class AuthStateService {
 
   constructor(private authService: AuthService) { }
 
+  login(email: string, password: string): Observable<any> {
+    this._loading.set(true);
+    this._error.set(null);
+
+    return this.authService.login(email, password).pipe(
+      tap((user: any) => {
+        this._user.set(user);
+        this._loading.set(false);
+      }),
+      catchError((error) => {
+        this._error.set(error);
+        return of(null);
+      }),
+      finalize(() => {
+        this._loading.set(false);
+      })
+    );
+  }
+
   register(fullName: string, email: string, password: string): Observable<any> {
     this._loading.set(true);
     this._error.set(null);

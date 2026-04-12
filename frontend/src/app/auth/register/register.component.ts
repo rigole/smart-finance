@@ -5,9 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { AuthStateService } from '../auth-state.services';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,6 +20,7 @@ import { ConfirmDialogService } from '../../shared/services/confirm-dialog.servi
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
     RouterLink,
     MatInputModule,
     MatButtonModule,
@@ -40,6 +43,8 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private snackBar: MatSnackBar,
+    private authStateService: AuthStateService,
     private confirmDialogService: ConfirmDialogService
   ) {
     this.loginForm = this.fb.group({
@@ -62,7 +67,23 @@ export class RegisterComponent {
       type: 'info'
     }).subscribe(confirmed => {
       if (confirmed) {
-        console.log("it is working")
+        this.authStateService.register(this.loginForm.value.fullName, this.loginForm.value.email, this.loginForm.value.password).subscribe({
+          next: (user) => {
+            const token = user.token;
+            localStorage.setItem('token', token);
+            this.snackBar.open('User registered successfully', 'Close', {
+              duration: 3000,
+              panelClass: ['success-snackbar']
+            });
+            this.router.navigate(['/auth/profile/', token]);
+          },
+          error: (error) => {
+            this.snackBar.open(error, 'Close', {
+              duration: 3000,
+              panelClass: ['error-snackbar']
+            });
+          }
+        });
       }
     });
 

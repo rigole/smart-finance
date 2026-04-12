@@ -7,11 +7,13 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authStateService = inject(AuthStateService);
   const router = inject(Router);
 
-  const user = authStateService.user();
+  const token = localStorage.getItem('token');
 
-  if (user) {
+  if (token) {
     return true;
   }
+
+  //angular@springboot.com
 
   router.navigate(['/auth/login']);
   return false;

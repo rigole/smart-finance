@@ -71,6 +71,8 @@ export class RegisterComponent {
           next: (user) => {
             const token = user.token;
             localStorage.setItem('token', token);
+            localStorage.setItem('email', user.email);
+            localStorage.setItem('fullName', user.fullName);
             this.snackBar.open('User registered successfully', 'Close', {
               duration: 3000,
               panelClass: ['success-snackbar']

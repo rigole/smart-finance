@@ -58,10 +58,11 @@ export class RegisterComponent {
       title: 'Register User',
       message: 'Are you sure you want to register this user?',
       confirmText: 'Yes, Register',
-      cancelText: 'Cancel'
+      cancelText: 'Cancel',
+      type: 'info'
     }).subscribe(confirmed => {
       if (confirmed) {
-        console.log("it is working") // your existing logic
+        console.log("it is working")
       }
     });
 

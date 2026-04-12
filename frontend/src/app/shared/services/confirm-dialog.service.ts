@@ -9,12 +9,13 @@ import { Injectable } from "@angular/core";
 })
 
 export class ConfirmDialogService {
-    constructor(private dialog: MatDialog) {}
-     open(data: ConfirmDialogData): Observable<boolean> {
+  constructor(private dialog: MatDialog) { }
+  open(data: ConfirmDialogData): Observable<boolean> {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data,
-      disableClose: true
+      disableClose: true,
+      panelClass: 'confirm-dialog-panel'
     });
 
     return dialogRef.afterClosed();

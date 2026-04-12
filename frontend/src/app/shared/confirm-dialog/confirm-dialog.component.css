@@ -1,0 +1,33 @@
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+mat-icon.info {
+  color: #2196f3;
+}
+
+mat-icon.warning {
+  color: #ff9800;
+}
+
+mat-icon.danger {
+  color: #f44336;
+}
+
+.confirm-dialog-panel .mat-mdc-dialog-title {
+  color: white;
+}
+
+.confirm-dialog-panel .mat-mdc-dialog-content {
+  color: #ccc;
+}
+
+.confirm-dialog-panel .mat-mdc-dialog-actions {
+  padding-top: 10px;
+}
+
+.confirm-dialog-panel button {
+  border-radius: 8px;
+}

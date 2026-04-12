@@ -257,8 +257,8 @@ Contributions, issues and feature requests are welcome!
 
 ## 👨‍💻 Author
 
-**[Your Name]**
-- LinkedIn: [linkedin.com/in/placide-rigole-foleu](hhttps://www.linkedin.com/in/placide-rigole-foleu/)
+**Placide FOLEU**
+- LinkedIn: [linkedin.com/in/placide-rigole-foleu](https://www.linkedin.com/in/placide-rigole-foleu/)
 - GitHub: [@rigole](https://github.com/rigole)
 - Email: foplacide@gmail.com
 

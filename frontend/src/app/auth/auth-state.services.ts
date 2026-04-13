@@ -1,6 +1,7 @@
 import { Injectable, signal } from "@angular/core";
 import { AuthService } from "../shared/services/auth.service";
-import { catchError, finalize, Observable, of, tap } from "rxjs";
+import { catchError, finalize, Observable, of, tap, throwError } from "rxjs";
+import { HttpErrorResponse } from "@angular/common/http";
 
 
 @Injectable({
@@ -27,9 +28,18 @@ export class AuthStateService {
         this._user.set(user);
         this._loading.set(false);
       }),
-      catchError((error) => {
-        this._error.set(error);
-        return of(null);
+      catchError((error: HttpErrorResponse) => {
+        let message = 'Login failed';
+        if (error.status === 0) {
+          message = 'Could not connect to the server';
+        } else if (error.status === 403) {
+          message = "Invalid email or password";
+        }
+        else {
+          message = error.error.message;
+        }
+        this._error.set(message);
+        return throwError(() => message);
       }),
       finalize(() => {
         this._loading.set(false);
@@ -46,9 +56,18 @@ export class AuthStateService {
         this._user.set(newUser);
         this._loading.set(false);
       }),
-      catchError((error) => {
-        this._error.set(error);
-        return of(null);
+      catchError((error: HttpErrorResponse) => {
+        let message = 'Registration failed';
+        if (error.status === 0) {
+          message = 'Could not connect to the server';
+        } else if (error.status === 403) {
+          message = "This email is already taken";
+        }
+        else {
+          message = error.error.message;
+        }
+        this._error.set(message);
+        return throwError(() => message);
       }),
       finalize(() => {
         this._loading.set(false);

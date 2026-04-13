@@ -29,11 +29,11 @@ import { AuthStateService } from '../auth-state.services';
 })
 export class LoginComponent {
 
-    loginForm: FormGroup;
-    isLoading = false;
-    hidePassword = true;
-    errorMessage = '';
-    constructor(
+  loginForm: FormGroup;
+  isLoading = false;
+  hidePassword = true;
+  errorMessage = '';
+  constructor(
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
@@ -51,7 +51,7 @@ export class LoginComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-     this.confirmDialogService.open({
+    this.confirmDialogService.open({
       title: 'Login User',
       message: 'Are you sure you want to login this user?',
       confirmText: 'Yes, Login',
@@ -59,27 +59,32 @@ export class LoginComponent {
       type: 'info'
     }).subscribe(confirmed => {
       if (confirmed) {
-         this.authStateService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-      next: (user) => {
-        const token = user.token;
-        localStorage.setItem('token', token);
-        this.snackBar.open('User logged in successfully', 'Close', {
-          duration: 3000,
-          panelClass: ['success-snackbar']
-        });
-        this.router.navigate(['/auth/profile/', token]);
-      },
-      error: (error) => {
-        this.snackBar.open(error, 'Close', {
-          duration: 3000,
-          panelClass: ['error-snackbar']
+        this.authStateService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
+          next: (user) => {
+            const token = user.token;
+            localStorage.setItem('token', token);
+            localStorage.setItem('email', user.email);
+            localStorage.setItem('fullName', user.fullName);
+            this.snackBar.open('User logged in successfully', 'Close', {
+              duration: 3000,
+              panelClass: ['success-snackbar']
+            });
+            this.isLoading = false;
+            this.router.navigate(['/auth/profile/', token]);
+          },
+          error: (message) => {
+            this.isLoading = false;
+            this.snackBar.open(message, 'Close', {
+              duration: 5000,
+              panelClass: ['error-snackbar']
+            });
+          }
         });
       }
-        });
-    }});
+    });
 
-   
-    
+
+
   }
 
   get email() { return this.loginForm.get('email'); }

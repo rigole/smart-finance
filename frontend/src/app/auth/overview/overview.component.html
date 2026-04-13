@@ -1,0 +1,72 @@
+<div class="overview">
+
+
+    <div class="page-header">
+        <h1> Welcome back, {{ userEmail }}!</h1>
+        <p>Here's your financial summary</p>
+    </div>
+
+    <div class="stats-grid">
+        <mat-card class="stat-card" *ngFor="let stat of stats">
+            <mat-card-content>
+                <div class="stat-header">
+                    <span class="stat-label">{{ stat.label }}</span>
+                    <mat-icon [class]="'icon-' + stat.color">{{ stat.icon }}</mat-icon>
+                </div>
+                <div class="stat-value">{{ stat.value }}</div>
+                <div class="stat-trend positive">
+                    {{ stat.trend }} this month
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <mat-card class="quick-actions">
+        <mat-card-header>
+            <mat-card-title>Quick Actions</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="actions-row">
+                <button mat-raised-button color="primary" routerLink="/transaction/new">
+                    <mat-icon>add</mat-icon>
+                    Add Transaction
+                </button>
+                <button mat-raised-button color="accent" routerLink="/budgets">
+                    <mat-icon>account_balance_wallet</mat-icon>
+                    Set Budget
+                </button>
+                <button mat-stroked-button routerLink="/insights">
+                    <mat-icon>insights</mat-icon>
+                    View Insights
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="recent-transactions">
+        <mat-card-header>
+            <mat-card-title>Recent Transactions</mat-card-title>
+            <span class="spacer"></span>
+            <button mat-button color="primary" routerLink="/dashboard/transactions">
+                View All
+            </button>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="transaction-item" *ngFor="let tx of recentTransactions">
+                <div class="tx-icon" [class.income]="tx.type === 'INCOME'" [class.expense]="tx.type === 'EXPENSE'">
+                    <mat-icon>
+                        {{ tx.type === 'INCOME' ? 'arrow_downward' : 'arrow_upward' }}
+                    </mat-icon>
+                </div>
+                <div class="tx-details">
+                    <span class="tx-description">{{ tx.description }}</span>
+                    <span class="tx-date">{{ tx.date }}</span>
+                </div>
+                <div class="tx-amount" [class.positive]="tx.amount > 0" [class.negative]="tx.amount < 0">
+                    {{ tx.amount > 0 ? '+' : '' }}{{ tx.amount | currency }}
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+</div>

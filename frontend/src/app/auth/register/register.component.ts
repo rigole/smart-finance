@@ -71,41 +71,30 @@ export class RegisterComponent {
           next: (user) => {
             const token = user.token;
             localStorage.setItem('token', token);
+            localStorage.setItem('email', user.email);
+            localStorage.setItem('fullName', user.fullName);
             this.snackBar.open('User registered successfully', 'Close', {
               duration: 3000,
               panelClass: ['success-snackbar']
             });
+            this.isLoading = false;
             this.router.navigate(['/auth/profile/', token]);
           },
-          error: (error) => {
-            this.snackBar.open(error, 'Close', {
-              duration: 3000,
+          error: (message) => {
+            this.isLoading = false;
+            this.snackBar.open(message, 'Close', {
+              duration: 5000,
               panelClass: ['error-snackbar']
             });
           }
         });
       }
     });
-
-
-    /*if (this.loginForm.invalid) return;
-
-    this.isLoading = true;
-    this.errorMessage = '';
-    console.log('Login form values:', this.loginForm.value);
-    setTimeout(() => {
-      this.isLoading = false;
-
-    }, 1000);
-    */
   }
 
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
   get fullName() { return this.loginForm.get('fullName'); }
-
-
-
 }
 
 

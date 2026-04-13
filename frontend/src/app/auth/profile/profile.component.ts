@@ -30,17 +30,17 @@ import { MatBadgeModule } from '@angular/material/badge';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-//angular@springboot.com
-//awerty
+  //angular@springboot.com
+  //awerty
 
   userEmail = localStorage.getItem('email') || 'user@email.com';
   userName = localStorage.getItem('fullName') || 'User';
 
   navItems = [
-    { icon: 'dashboard',     label: 'Overview',     route: '/dashboard' },
-    { icon: 'receipt_long',  label: 'Transactions', route: '/dashboard/transactions' },
-    { icon: 'account_balance_wallet', label: 'Budgets', route: '/dashboard/budgets' },
-    { icon: 'insights',      label: 'AI Insights',  route: '/dashboard/insights' },
+    { icon: 'dashboard', label: 'Overview', route: '' },
+    { icon: 'receipt_long', label: 'Transactions', route: '/transactions' },
+    { icon: 'account_balance_wallet', label: 'Budgets', route: '/budgets' },
+    { icon: 'insights', label: 'AI Insights', route: 'insights' },
   ];
 
   logout() {

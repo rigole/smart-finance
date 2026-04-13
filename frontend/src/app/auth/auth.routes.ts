@@ -24,6 +24,26 @@ export const authRoutes = [
                 path: '',
                 loadComponent: () => import('./overview/overview.component').
                     then(m => m.OverviewComponent)
+            },
+            {
+                path: 'transactions',
+                loadComponent: () => import('../transactions/transaction-list/transaction-list.component').
+                    then(m => m.TransactionListComponent)
+            },
+            {
+                path: 'transaction/new',
+                loadComponent: () => import('../transactions/transaction-form/transaction-form.component').
+                    then(m => m.TransactionFormComponent)
+            },
+            {
+                path: 'budgets',
+                loadComponent: () => import('../budgets/budget-list/budget-list.component').
+                    then(m => m.BudgetListComponent)
+            },
+            {
+                path: 'insights',
+                loadComponent: () => import('../insights/insights-list/insights-list.component').
+                    then(m => m.InsightsListComponent)
             }
         ],
         canActivate: [authGuard]

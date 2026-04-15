@@ -7,13 +7,8 @@ import com.smartfinance.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,10 +29,9 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<TransactionResponse> create(
-            @Valid @RequestBody TransactionRequest request,
-            @AuthenticationPrincipal User user) {
+            @Valid @RequestBody TransactionRequest request) {
         return ResponseEntity.ok(
-                transactionService.createTransaction(request, user));
+                transactionService.createTransaction(request));
     }
 
     @PutMapping("/{id}")

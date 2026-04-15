@@ -36,6 +36,7 @@ public class TransactionRequest {
     private String type;
 
     private UUID categoryId;
+    
 
 
 

@@ -7,8 +7,10 @@ import com.smartfinance.model.Transaction;
 import com.smartfinance.model.User;
 import com.smartfinance.repository.CategoryRepository;
 import com.smartfinance.repository.TransactionRepository;
+import com.smartfinance.repository.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     public List<TransactionResponse> getAllTransactions(User user) {
         return transactionRepository
@@ -31,18 +34,24 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
-    public TransactionResponse createTransaction(TransactionRequest request, User user ) {
+    public TransactionResponse createTransaction(TransactionRequest request) {
         Category category = null;
         if (request.getCategoryId() != null) {
             category = categoryRepository.findById(request.getCategoryId()).orElse(null);
         }
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+        User managedUser = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
         Transaction transaction = Transaction.builder()
                 .amount(request.getAmount())
                 .description(request.getDescription())
                 .type(request.getType())
                 .date(request.getDate())
                 .category(category)
-                .user(user)
+                .user(managedUser)
                 .build();
 
         return mapToResponse(
@@ -78,7 +87,6 @@ public class TransactionService {
         if (!transaction.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("Unauthorized");
         }
-
         transactionRepository.delete(transaction);
     }
 

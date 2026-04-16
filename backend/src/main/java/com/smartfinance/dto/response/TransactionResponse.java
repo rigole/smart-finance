@@ -1,5 +1,6 @@
 package com.smartfinance.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +15,8 @@ public class TransactionResponse {
     private UUID id;
     private BigDecimal amount;
     private String description;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private String type;
     private String categoryName;

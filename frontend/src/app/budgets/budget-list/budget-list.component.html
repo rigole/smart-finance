@@ -1,1 +1,99 @@
-<p>budget-list works!</p>
+<div class="page">
+
+    <div class="page-header">
+        <div>
+            <h1> Budgets</h1>
+            <p>Set and track your monthly spending limits</p>
+        </div>
+        <button mat-raised-button color="primary" (click)="showForm = !showForm">
+            <mat-icon>{{ showForm ? 'close' : 'add' }}</mat-icon>
+            {{ showForm ? 'Cancel' : 'New Budget' }}
+        </button>
+    </div>
+
+
+    <mat-card class="form-card" *ngIf="showForm">
+        <mat-card-header>
+            <mat-card-title>Create New Budget</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="budgetForm" (ngSubmit)="onSubmit()" class="budget-form">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="category">
+                        <mat-option *ngFor="let cat of categories" [value]="cat">
+                            {{ cat }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Monthly Limit ($)</mat-label>
+                    <input matInput type="number" formControlName="limit" placeholder="e.g. 500">
+                    <mat-icon matPrefix>attach_money</mat-icon>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="budgetForm.invalid">
+                    <mat-icon>save</mat-icon>
+                    Save Budget
+                </button>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+
+    <div class="budgets-grid">
+        <mat-card class="budget-card" *ngFor="let budget of budgets">
+            <mat-card-content>
+
+                <div class="budget-header">
+                    <div class="budget-title">
+                        <!--<span class="budget-icon">{{ budget.icon }}</span>-->
+                        <span class="budget-category">{{ budget.category }}</span>
+                    </div>
+                    <button mat-icon-button color="warn" (click)="deleteBudget(budget.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+
+                <div class="budget-amounts">
+                    <span class="spent">
+                        ${{ budget.spent }} spent
+                    </span>
+                    <span class="limit">
+                        of ${{ budget.limit }}
+                    </span>
+                </div>
+
+                <mat-progress-bar [mode]="'determinate'" [value]="getProgress(budget)"
+                    [color]="getProgressColor(budget)" class="progress-bar">
+                </mat-progress-bar>
+
+                <div class="budget-footer">
+                    <span class="status">
+                        {{ getStatusLabel(budget) }}
+                    </span>
+                    <span class="remaining" [class.over]="budget.spent >= budget.limit">
+                        ${{ budget.limit - budget.spent }} remaining
+                    </span>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+
+    <mat-card class="empty-state" *ngIf="budgets.length === 0">
+        <mat-card-content>
+            <mat-icon>account_balance_wallet</mat-icon>
+            <p>No budgets yet. Create your first budget!</p>
+            <button mat-raised-button color="primary" (click)="showForm = true">
+                <mat-icon>add</mat-icon>
+                Create Budget
+            </button>
+        </mat-card-content>
+    </mat-card>
+
+</div>

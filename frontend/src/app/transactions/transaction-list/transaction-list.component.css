@@ -1,0 +1,74 @@
+.page { max-width: 1100px; }
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h1 { font-size: 26px; font-weight: 700; }
+.page-header p { color: #666; font-size: 14px; }
+
+/* Summary */
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card mat-card-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px !important;
+}
+
+.summary-card mat-icon { font-size: 36px; width: 36px; height: 36px; }
+.summary-card span { font-size: 13px; color: #666; display: block; }
+.summary-card strong { font-size: 22px; font-weight: 700; }
+
+.income-card mat-icon { color: #4caf50; }
+.expense-card mat-icon { color: #f44336; }
+.balance-card mat-icon { color: #00bcd4; }
+
+/* Form */
+.form-card { margin-bottom: 24px; border-radius: 12px !important; }
+
+.transaction-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.transaction-form button {
+  grid-column: 1 / -1;
+  height: 48px;
+}
+
+/* Table */
+.table-card { border-radius: 12px !important; }
+.full-width { width: 100%; }
+
+.chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.income-chip { background: #e8f5e9; color: #2e7d32; }
+.expense-chip { background: #fdecea; color: #c62828; }
+
+.positive { color: #4caf50; font-weight: 600; }
+.negative { color: #f44336; font-weight: 600; }
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+}
+
+.empty-state mat-icon { font-size: 48px; width: 48px; height: 48px; }

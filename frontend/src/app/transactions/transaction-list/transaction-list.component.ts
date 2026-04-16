@@ -102,11 +102,18 @@ export class TransactionListComponent {
     })
   }
 
-  deleteTransaction(id: number) {
-    /*
-    this.transactions = this.transactions.filter(t => t.id !== id);
-    this.snackBar.open('Transaction deleted', 'Close',
-      { duration: 2000 });
-    */
+  deleteTransaction(id: string) {
+    this.transactionStateService.deleteTransaction(id).subscribe({
+      next: () => {
+        this.transactions = this.transactions.filter(t => t.id !== id);
+        this.snackBar.open('Transaction deleted', 'Close',
+          { duration: 2000 });
+      },
+      error: (message) => {
+        this.snackBar.open(message, 'Close',
+          { duration: 3000 });
+      }
+    })
+    
   }
 }

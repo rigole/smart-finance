@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
+import { TransactionStateService } from '../service/transaction-state.services';
 
 @Component({
   selector: 'app-transaction-list',
@@ -38,17 +39,24 @@ export class TransactionListComponent {
   displayedColumns = ['date', 'description', 'type', 'amount', 'actions'];
 
   transactions = [
-    { id: 1, description: 'Salary', type: 'INCOME',
-      amount: 3000, date: '2026-03-28' },
-    { id: 2, description: 'Groceries', type: 'EXPENSE',
-      amount: 150, date: '2026-03-29' },
-    { id: 3, description: 'Netflix', type: 'EXPENSE',
-      amount: 15, date: '2026-03-27' },
+    {
+      description: 'Salary', type: 'INCOME',
+      amount: 3000, date: '2026-03-28'
+    },
+    {
+      description: 'Groceries', type: 'EXPENSE',
+      amount: 150, date: '2026-03-29'
+    },
+    {
+      description: 'Netflix', type: 'EXPENSE',
+      amount: 15, date: '2026-03-27'
+    },
   ];
 
   constructor(
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private transactionStateService: TransactionStateService
   ) {
     this.transactionForm = this.fb.group({
       description: ['', Validators.required],
@@ -58,7 +66,7 @@ export class TransactionListComponent {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   get totalIncome() {
     return this.transactions
@@ -76,22 +84,31 @@ export class TransactionListComponent {
     if (this.transactionForm.invalid) return;
 
     const newTransaction = {
-      id: this.transactions.length + 1,
       ...this.transactionForm.value,
       date: this.transactionForm.value.date
-            .toISOString().split('T')[0]
+        .toISOString().split('T')[0]
     };
 
-    this.transactions = [newTransaction, ...this.transactions];
-    this.transactionForm.reset({ type: 'EXPENSE', date: new Date() });
-    this.showForm = false;
-    this.snackBar.open('Transaction added! ', 'Close',
-      { duration: 3000 });
+    this.transactionStateService.addTransaction(newTransaction).subscribe({
+      next: (transaction) => {
+        this.transactions = [transaction, ...this.transactions];
+        this.transactionForm.reset({ type: 'EXPENSE', date: new Date() });
+        this.showForm = false;
+        this.snackBar.open('Transaction added! ', 'Close',
+          { duration: 3000 });
+      },
+      error: (message) => {
+        this.snackBar.open(message, 'Close',
+          { duration: 3000 });
+      }
+    })
   }
 
   deleteTransaction(id: number) {
+    /*
     this.transactions = this.transactions.filter(t => t.id !== id);
     this.snackBar.open('Transaction deleted', 'Close',
       { duration: 2000 });
+    */
   }
 }

@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { TransactionStateService } from '../service/transaction-state.services';
+import { Transaction } from '../../shared/models/Transaction';
 
 @Component({
   selector: 'app-transaction-list',
@@ -37,21 +38,7 @@ export class TransactionListComponent {
   showForm = false;
   transactionForm: FormGroup;
   displayedColumns = ['date', 'description', 'type', 'amount', 'actions'];
-
-  transactions = [
-    {
-      description: 'Salary', type: 'INCOME',
-      amount: 3000, date: '2026-03-28'
-    },
-    {
-      description: 'Groceries', type: 'EXPENSE',
-      amount: 150, date: '2026-03-29'
-    },
-    {
-      description: 'Netflix', type: 'EXPENSE',
-      amount: 15, date: '2026-03-27'
-    },
-  ];
+  transactions : Transaction [] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -66,7 +53,18 @@ export class TransactionListComponent {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.transactionStateService.getTransactions().subscribe({
+      next: (transactions) => {
+        this.transactions = transactions;
+        console.log(this.transactions);
+      },
+      error: (message) => {
+        this.snackBar.open(message, 'Close',
+          { duration: 3000 });
+      }
+    })
+  }
 
   get totalIncome() {
     return this.transactions

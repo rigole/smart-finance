@@ -20,7 +20,6 @@ export class TransactionStateService {
 
     constructor(private transactionService: TransactionService) {}
 
-
     addTransaction(transaction: any): Observable<any> {
         this._loading.set(true);
         this._error.set(null);
@@ -28,6 +27,34 @@ export class TransactionStateService {
         return this.transactionService.addTransaction(transaction).pipe(
             tap((newTransaction: any) => {
                 this._transactions.update((transactions) => [...transactions, newTransaction]);
+                this._loading.set(false);
+            }),
+            catchError((error: HttpErrorResponse) => {
+                let message = 'Transaction failed';
+                if (error.status === 0) {
+                    message = 'Could not connect to the server';
+                } else if (error.status === 403) {
+                    message = "Invalid email or password";
+                }
+                else {
+                    message = error.error.message;
+                }
+                this._error.set(message);
+                return throwError(() => message);
+            }),
+            finalize(() => {
+                this._loading.set(false);
+            })
+        );
+    }
+
+    getTransactions() {
+        this._loading.set(true);
+        this._error.set(null);
+
+        return this.transactionService.getTransactions().pipe(
+            tap((transactions: any) => {
+                this._transactions.set(transactions);
                 this._loading.set(false);
             }),
             catchError((error: HttpErrorResponse) => {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,6 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { ActivatedRoute } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -33,11 +34,16 @@ import { MatBadgeModule } from '@angular/material/badge';
 export class ProfileComponent {
   userId: string = '';
   navItems: { icon: string; label: string; route: string; }[] = [];
+  private authService = inject(AuthService);
   //angular@springboot.com
   //awerty
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.authService.logout();
+      return;
+    }
     this.route.params.subscribe(params => {
       this.userId = params['id'];
       this.navItems = [

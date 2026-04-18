@@ -5,6 +5,7 @@ import { AuthStateService } from '../../auth/auth-state.services';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authStateService = inject(AuthStateService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
   const token = localStorage.getItem('token');
@@ -13,8 +14,11 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  //angular@springboot.com
+  if(authService.isLoggedIn()){
+    return true;
+  }
 
+  localStorage.clear();
   router.navigate(['/auth/login']);
   return false;
 };

@@ -2,10 +2,19 @@ import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
 import { Inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError, throwError } from "rxjs";
+import { AuthService } from "../services/auth.service";
 
 export const authInterceptor : HttpInterceptorFn = (req, next) => {
-    const token = localStorage.getItem('token');
     const router = Inject(Router);
+    const authService = Inject(AuthService);
+    const token = authService.getToken();
+
+    if (authService.isTokenExpired()) {
+        localStorage.clear();
+        router.navigate(['/auth/login']);
+        return throwError(() => 'Session expired');
+    }
+
 
      const authReq = token
     ? req.clone({

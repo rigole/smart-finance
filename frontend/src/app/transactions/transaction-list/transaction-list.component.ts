@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from "@angular/material/icon";
@@ -38,7 +38,10 @@ export class TransactionListComponent {
   showForm = false;
   transactionForm: FormGroup;
   displayedColumns = ['date', 'description', 'type', 'amount', 'actions'];
-  transactions : Transaction [] = [];
+
+  loading: any;
+  error: any;
+  transactions: any;
 
   constructor(
     private fb: FormBuilder,
@@ -51,14 +54,13 @@ export class TransactionListComponent {
       type: ['EXPENSE', Validators.required],
       date: [new Date(), Validators.required]
     });
+    this.loading = this.transactionStateService.loading;
+    this.error = this.transactionStateService.error;
+    this.transactions = this.transactionStateService.transactions;
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.transactionStateService.getTransactions().subscribe({
-      next: (transactions) => {
-        this.transactions = transactions;
-        console.log(this.transactions);
-      },
       error: (message) => {
         this.snackBar.open(message, 'Close',
           { duration: 3000 });
@@ -66,17 +68,16 @@ export class TransactionListComponent {
     })
   }
 
-  get totalIncome() {
-    return this.transactions
-      .filter(t => t.type === 'INCOME')
-      .reduce((sum, t) => sum + t.amount, 0);
-  }
-
-  get totalExpenses() {
-    return this.transactions
-      .filter(t => t.type === 'EXPENSE')
-      .reduce((sum, t) => sum + t.amount, 0);
-  }
+  totalIncome = computed(() =>
+    this.transactions()
+      .filter((t: { type: string; }) => t.type === 'INCOME')
+      .reduce((sum: any, t: { amount: any; }) => sum + t.amount, 0)
+  );
+  totalExpenses = computed(() =>
+    this.transactions()
+      .filter((t: { type: string; }) => t.type === 'EXPENSE')
+      .reduce((sum: any, t: { amount: any; }) => sum + t.amount, 0)
+  );
 
   onSubmit() {
     if (this.transactionForm.invalid) return;
@@ -89,31 +90,29 @@ export class TransactionListComponent {
 
     this.transactionStateService.addTransaction(newTransaction).subscribe({
       next: (transaction) => {
-        this.transactions = [transaction, ...this.transactions];
+        this.transactionStateService.addTransaction(transaction);
         this.transactionForm.reset({ type: 'EXPENSE', date: new Date() });
         this.showForm = false;
-        this.snackBar.open('Transaction added! ', 'Close',
+        this.snackBar.open('Transaction added!', 'Close',
           { duration: 3000 });
       },
       error: (message) => {
-        this.snackBar.open(message, 'Close',
-          { duration: 3000 });
+        this.snackBar.open(message, 'Close', { duration: 3000 });
       }
-    })
+    });
   }
 
   deleteTransaction(id: string) {
     this.transactionStateService.deleteTransaction(id).subscribe({
       next: () => {
-        this.transactions = this.transactions.filter(t => t.id !== id);
-        this.snackBar.open('Transaction deleted', 'Close',
+        this.transactionStateService.deleteTransaction(id);
+        this.snackBar.open('Transaction deleted ', 'Close',
           { duration: 2000 });
       },
       error: (message) => {
-        this.snackBar.open(message, 'Close',
-          { duration: 3000 });
+        this.snackBar.open(message, 'Close', { duration: 3000 });
       }
-    })
-    
+    });
+
   }
 }

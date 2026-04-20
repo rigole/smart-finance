@@ -234,7 +234,7 @@ ng serve
 - [x] Project setup & Docker configuration
 - [x] JWT Authentication (register/login)
 - [x] Transaction CRUD API
-- [ ] Angular dashboard with charts
+- [x] Angular dashboard with charts
 - [ ] Budget management
 - [ ] AI-powered insights
 - [ ] CSV/PDF export

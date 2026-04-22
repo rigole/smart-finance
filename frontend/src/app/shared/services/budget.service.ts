@@ -14,7 +14,7 @@ export class BudgetService {
     return this.http.get(`${this.baseUrl}`);
   }
 
-  createBudget(budget: any) {
+  addBudget(budget: any) {
     return this.http.post(`${this.baseUrl}`, budget);
   }
 

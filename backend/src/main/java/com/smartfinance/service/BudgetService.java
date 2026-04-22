@@ -43,6 +43,7 @@ public class BudgetService {
         Budget budget = Budget.builder()
                 .amount(request.getAmount())
                 .category(request.getCategory())
+                .spent(request.getSpent())
                 .user(managedUser)
                 .build();
         return mapToResponse(budgetRepository.save(budget));
@@ -58,6 +59,7 @@ public class BudgetService {
         budget.setCategory(request.getCategory());
         budget.setAmount(request.getAmount());
         budget.setUser(user);
+        budget.setSpent(request.getSpent());
         return mapToResponse(budgetRepository.save(budget));
     }
 
@@ -77,6 +79,7 @@ public class BudgetService {
         return BudgetResponse.builder()
                 .id(b.getId())
                 .amount(b.getAmount())
+                .spent(b.getSpent())
                 .category(b.getCategory())
                 .createdAt(b.getCreatedAt())
                 .build();

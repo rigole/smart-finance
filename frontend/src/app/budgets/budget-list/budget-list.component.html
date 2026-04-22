@@ -30,7 +30,13 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Monthly Limit ($)</mat-label>
-                    <input matInput type="number" formControlName="limit" placeholder="e.g. 500">
+                    <input matInput type="number" formControlName="amount" placeholder="e.g. 500">
+                    <mat-icon matPrefix>attach_money</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Spent ($)</mat-label>
+                    <input matInput type="number" formControlName="spent" placeholder="e.g. 500">
                     <mat-icon matPrefix>attach_money</mat-icon>
                 </mat-form-field>
 
@@ -45,12 +51,11 @@
 
 
     <div class="budgets-grid">
-        <mat-card class="budget-card" *ngFor="let budget of budgets">
+        <mat-card class="budget-card" *ngFor="let budget of budgets()">
             <mat-card-content>
 
                 <div class="budget-header">
                     <div class="budget-title">
-                        <!--<span class="budget-icon">{{ budget.icon }}</span>-->
                         <span class="budget-category">{{ budget.category }}</span>
                     </div>
                     <button mat-icon-button color="warn" (click)="deleteBudget(budget.id)">
@@ -62,8 +67,8 @@
                     <span class="spent">
                         ${{ budget.spent }} spent
                     </span>
-                    <span class="limit">
-                        of ${{ budget.limit }}
+                    <span class="amount">
+                        of ${{ budget.amount }}
                     </span>
                 </div>
 
@@ -75,8 +80,8 @@
                     <span class="status">
                         {{ getStatusLabel(budget) }}
                     </span>
-                    <span class="remaining" [class.over]="budget.spent >= budget.limit">
-                        ${{ budget.limit - budget.spent }} remaining
+                    <span class="remaining" [class.over]="budget.spent >= budget.amount">
+                        ${{ budget.amount - budget.spent }} remaining
                     </span>
                 </div>
 
@@ -85,7 +90,7 @@
     </div>
 
 
-    <mat-card class="empty-state" *ngIf="budgets.length === 0">
+    <mat-card class="empty-state" *ngIf="budgets().length === 0">
         <mat-card-content>
             <mat-icon>account_balance_wallet</mat-icon>
             <p>No budgets yet. Create your first budget!</p>

@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,6 +15,7 @@ public class BudgetResponse {
     private UUID id;
     private BigDecimal amount;
     private String category;
+    private BigDecimal spent;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;

@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { BudgetStateService } from '../service/budget-state.services';
 
 @Component({
   selector: 'app-budget-list',
@@ -33,26 +34,36 @@ export class BudgetListComponent {
 
   showForm = false;
   budgetForm: FormGroup;
-
+  budgets: any;
+  loading: any;
+  error: any;
+  /*
   budgets = [
     {
       id: 1, category: 'Food & Groceries',
-      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', limit: 500, spent: 320
+      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', 
+      amount: 500,
+      spent: 320
     },
     {
       id: 2, category: 'Transport',
-      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', limit: 200, spent: 180
+      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', 
+      amount: 200,
+      spent: 180
     },
     {
       id: 3, category: 'Entertainment',
-      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', limit: 100, spent: 45
+      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', amount: 100,
+      spent: 45
     },
     {
       id: 4, category: 'Utilities',
-      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', limit: 150, spent: 150
+      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', 
+      amount: 150,
+      spent: 150
     },
   ];
-
+*/
   categories = [
     'Food & Groceries', 'Transport', 'Entertainment',
     'Utilities', 'Health', 'Shopping', 'Education', 'Other'
@@ -60,16 +71,33 @@ export class BudgetListComponent {
 
   constructor(
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private budgetStateService: BudgetStateService
   ) {
     this.budgetForm = this.fb.group({
       category: ['', Validators.required],
-      limit: ['', [Validators.required, Validators.min(1)]]
+     // icon: ['', Validators.required],
+      spent: ['', Validators.required],
+      amount: ['', [Validators.required, Validators.min(1)]]
     });
+    this.budgets = this.budgetStateService.budgets;
+    this.loading = this.budgetStateService.loading;
+    this.error = this.budgetStateService.error;
+  }
+
+
+
+   ngOnInit() {
+      this.budgetStateService.getAllBudgets().subscribe({
+        error: (message) => {
+          this.snackBar.open(message, 'Close',
+            { duration: 3000 });
+        }
+      })
   }
 
   getProgress(budget: any): number {
-    return Math.min((budget.spent / budget.limit) * 100, 100);
+    return Math.min((budget.spent / budget.amount) * 100, 100);
   }
 
   getProgressColor(budget: any): string {
@@ -88,23 +116,24 @@ export class BudgetListComponent {
 
   onSubmit() {
     if (this.budgetForm.invalid) return;
+    
+    const newBudget = this.budgetForm.value
 
-    const newBudget = {
-      id: this.budgets.length + 1,
-      icon: '',
-      spent: 0,
-      ...this.budgetForm.value
-    };
-
-    this.budgets = [...this.budgets, newBudget];
-    this.budgetForm.reset();
-    this.showForm = false;
-    this.snackBar.open('Budget created! ', 'Close',
+    console.log("newBudget", newBudget)
+    
+    this.budgetStateService.addBudget(newBudget).subscribe({
+      next: () => {
+        this.budgets = [...this.budgets, newBudget];
+        this.budgetForm.reset();
+        this.showForm = false;
+        this.snackBar.open('Budget created! ', 'Close',
       { duration: 3000 });
+    }})
+    
   }
 
   deleteBudget(id: number) {
-    this.budgets = this.budgets.filter(b => b.id !== id);
+    this.budgets = this.budgets.filter((b: { id: number; }) => b.id !== id);
     this.snackBar.open('Budget deleted', 'Close',
       { duration: 2000 });
   }

@@ -34,7 +34,10 @@ import { Transaction } from '../../shared/models/Transaction';
   templateUrl: './transaction-list.component.html',
   styleUrl: './transaction-list.component.css'
 })
-export class TransactionListComponent {
+
+
+
+export class TransactionListComponent  {
   showForm = false;
   transactionForm: FormGroup;
   displayedColumns = ['date', 'description', 'type', 'amount', 'actions'];

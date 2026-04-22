@@ -28,6 +28,7 @@ export class TransactionStateService {
             tap((newTransaction: any) => {
                 this._transactions.update((transactions) => [...transactions, newTransaction]);
                 this._loading.set(false);
+                
             }),
             catchError((error: HttpErrorResponse) => {
                 let message = 'Transaction failed';

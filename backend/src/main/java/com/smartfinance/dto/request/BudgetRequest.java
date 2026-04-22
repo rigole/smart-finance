@@ -24,6 +24,12 @@ public class BudgetRequest {
     private BigDecimal amount;
 
 
+    @NotNull(message = "Spent money is required")
+    @Positive(message = "Spent amount must be positive")
+    @JsonProperty("spent")
+    private BigDecimal spent;
+
+
     @NotNull(message = "Category is required")
     private String category;
 }

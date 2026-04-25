@@ -235,7 +235,7 @@ ng serve
 - [x] JWT Authentication (register/login)
 - [x] Transaction CRUD API
 - [x] Angular dashboard with charts
-- [ ] Budget management
+- [x] Budget management
 - [ ] AI-powered insights
 - [ ] CSV/PDF export
 - [ ] CI/CD pipeline

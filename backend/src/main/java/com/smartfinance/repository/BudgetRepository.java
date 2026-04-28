@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface BudgetRepository extends JpaRepository<Budget, UUID> {
     List<Budget> findByUserIdOrderByCreatedAtDesc(UUID userId);
+
+    List<Budget> findByUserId(UUID userId);
 }

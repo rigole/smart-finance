@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { LanguageSwitcherComponent } from "../../shared/language-switcher/language-switcher.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MatIconModule, RouterLink, LanguageSwitcherComponent],
+  imports: [CommonModule, TranslateModule, MatIconModule, RouterLink, LanguageSwitcherComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

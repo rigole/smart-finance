@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-language-switcher',
@@ -12,9 +13,12 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class LanguageSwitcherComponent {
  currentLang = localStorage.getItem('lang') || 'en';
+  constructor(private translate: TranslateService) {}
 
   switchLang(lang: string) {
+    this.currentLang = lang;
     localStorage.setItem('lang', lang);
-    window.location.href = `/${lang}/`;
+    this.translate.use(lang); 
   }
+
 }

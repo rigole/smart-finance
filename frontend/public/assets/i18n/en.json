@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "signIn": "Sign In",
+    "getStarted": "Get Started",
+    "overview": "Overview",
+    "transactions": "Transactions",
+    "budgets": "Budgets",
+    "insights": "AI Insights",
+    "logout": "Logout"
+  },
+
+  "home": {
+    "title": "Take Control of",
+    "highlight": "Your Finances",
+    "subtitle": "Smart Finance helps you track expenses, set budgets and get AI-powered insights",
+    "startFree": "Start for Free",
+    "features": "Everything you need to manage your money",
+    "secure": "Secure",
+    "private": "Private",
+    "aiPowered": "AI Powered",
+    "readyToTakeControl": "Ready to take control?",
+    "joinSmartFinance": "Join Smart Finance today and start your journey to financial freedom",
+    "getStartedFree": "Get Started — It's Free",
+    "freeToUse": "Free to use",
+    "secureAndPrivate": "Secure & Private",
+    "smartFinanceDashboard": "Smart Finance Dashboard",
+    "totalBalance": "Total Balance",
+    "expenses": "Expenses",
+    "income": "Income",
+    "takeControl": "Take Control",
+    "manageYourMoney": "Manage your money"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "subtitle": "Manage your income and expenses",
+    "add": "Add Transaction",
+    "cancel": "Cancel",
+    "description": "Description",
+    "amount": "Amount",
+    "type": "Type",
+    "date": "Date",
+    "save": "Save Transaction",
+    "income": "Income",
+    "expense": "Expense",
+    "totalIncome": "Total Income",
+    "totalExpenses": "Total Expenses",
+    "balance": "Balance",
+    "all": "All Transactions",
+    "empty": "No transactions yet. Add your first one!",
+    "added": "Transaction added!",
+    "deleted": "Transaction deleted"
+  },
+  "budgets": {
+    "title": "Budgets",
+    "subtitle": "Set and track your monthly spending limits",
+    "add": "New Budget",
+    "cancel": "Cancel",
+    "category": "Category",
+    "limit": "Monthly Limit",
+    "save": "Save Budget",
+    "empty": "No budgets yet",
+    "added": "Budget added!",
+    "deleted": "Budget deleted",
+    "onTrack": "On track",
+    "warning": "Almost full",
+    "exceeded": "Over budget!",
+    "remaining": "remaining"
+  },
+  "insights": {
+    "title": "AI Insights",
+    "subtitle": "Smart analysis of your financial habits",
+    "generate": "Generate Insights",
+    "generating": "Generating...",
+    "empty": "No insights yet",
+    "emptySubtitle": "Click Generate Insights to get AI-powered analysis!",
+    "generated": "Insights generated!"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full Name",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  }
+}

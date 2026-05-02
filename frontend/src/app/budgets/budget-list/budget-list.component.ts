@@ -37,33 +37,7 @@ export class BudgetListComponent {
   budgets: any;
   loading: any;
   error: any;
-  /*
-  budgets = [
-    {
-      id: 1, category: 'Food & Groceries',
-      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', 
-      amount: 500,
-      spent: 320
-    },
-    {
-      id: 2, category: 'Transport',
-      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', 
-      amount: 200,
-      spent: 180
-    },
-    {
-      id: 3, category: 'Entertainment',
-      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', amount: 100,
-      spent: 45
-    },
-    {
-      id: 4, category: 'Utilities',
-      icon: 'https://img.icons8.com/?size=100&id=9671&format=png&color=000000', 
-      amount: 150,
-      spent: 150
-    },
-  ];
-*/
+
   categories = [
     'Food & Groceries', 'Transport', 'Entertainment',
     'Utilities', 'Health', 'Shopping', 'Education', 'Other'
@@ -76,7 +50,6 @@ export class BudgetListComponent {
   ) {
     this.budgetForm = this.fb.group({
       category: ['', Validators.required],
-     // icon: ['', Validators.required],
       spent: ['', Validators.required],
       amount: ['', [Validators.required, Validators.min(1)]]
     });
@@ -119,7 +92,6 @@ export class BudgetListComponent {
     
     const newBudget = this.budgetForm.value
 
-    console.log("newBudget", newBudget)
     
     this.budgetStateService.addBudget(newBudget).subscribe({
       next: () => {

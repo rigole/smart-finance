@@ -7,7 +7,7 @@ import { AuthService } from "../services/auth.service";
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService)
-  const publicUrls = ['/auth/login', '/auth/register'];
+  const publicUrls = ['/auth/login', '/auth/register', 'assets/i18n/', 'i18n/'];
   const isPublic = publicUrls.some(url => req.url.includes(url));
 
   if (isPublic) {

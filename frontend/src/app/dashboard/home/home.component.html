@@ -7,51 +7,51 @@
       <span class="brand-name">Smart Finance</span>
     </div>
     <div class="nav-links">
-      <a routerLink="/auth/login" class="btn-outline">Sign In</a>
-      <a routerLink="/auth/register" class="btn-primary">Get Started</a>
+      <app-language-switcher></app-language-switcher>
+      <a routerLink="/auth/login" class="btn-outline"> {{ 'nav.signIn' | translate }}</a>
+      <a routerLink="/auth/register" class="btn-primary"> {{ 'nav.getStarted' | translate }}</a>
     </div>
   </nav>
 
-  
+
   <section class="hero">
     <div class="hero-content">
       <h1 class="hero-title">
-        Take Control of
-        <span class="highlight">Your Finances</span>
+        {{ 'home.title' | translate }}
+        <span class="highlight">{{ 'home.highlight' | translate }}</span>
       </h1>
       <p class="hero-subtitle">
-        Smart Finance helps you track expenses, set budgets,
-        and get AI-powered insights — all in one beautiful dashboard.
+        {{ 'home.subtitle' | translate }}
       </p>
       <div class="hero-actions">
         <a routerLink="/auth/register" class="btn-primary btn-large">
-          Start for Free
+          {{ 'nav.getStarted' | translate }}
         </a>
         <a routerLink="/auth/login" class="btn-outline btn-large">
-          Sign In
+          {{ 'nav.signIn' | translate }}
         </a>
       </div>
 
-    
+
       <div class="stats">
         <div class="stat">
           <span class="stat-number">100%</span>
-          <span class="stat-label">Free to use</span>
+          <span class="stat-label">{{ 'home.free' | translate }}</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <mat-icon class="stat-number">lock</mat-icon>
-          <span class="stat-label">Secure & Private</span>
+          <span class="stat-label">{{ 'home.secure' | translate }} & {{ 'home.private' | translate }}</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <mat-icon class="stat-number">smart_toy</mat-icon>
-          <span class="stat-label">AI Powered</span>
+          <span class="stat-label">{{ 'home.aiPowered' | translate }}</span>
         </div>
       </div>
     </div>
 
-    
+
     <div class="hero-visual">
       <div class="dashboard-preview">
         <div class="preview-header">
@@ -88,7 +88,7 @@
 
 
   <section class="features">
-    <h2>Everything you need to manage your money</h2>
+    <h2>{{ 'home.features' | translate }}</h2>
     <div class="features-grid">
       @for (feature of features; track $index) {
       <div class="feature-card">
@@ -104,10 +104,10 @@
 
 
   <section class="cta">
-    <h2>Ready to take control?</h2>
-    <p>Join Smart Finance today and start your journey to financial freedom</p>
+    <h2>{{ 'home.readyToTakeControl' | translate }}</h2>
+    <p>{{ 'home.joinSmartFinance' | translate }}</p>
     <a routerLink="/auth/register" class="btn-primary btn-large">
-      Get Started — It's Free
+      {{ 'home.getStartedFree' | translate }}
     </a>
   </section>
 

@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class InsightService {
-    private GroqService  groqService;
-    private TransactionRepository transactionRepository;
-    private RuleEngineService ruleEngineService;
-    private BudgetRepository  budgetRepository;
-    private UserRepository userRepository;
-    private InsightRepository insightRepository;
+    private final GroqService  groqService;
+    private final TransactionRepository transactionRepository;
+    private final RuleEngineService ruleEngineService;
+    private final BudgetRepository  budgetRepository;
+    private final UserRepository userRepository;
+    private final InsightRepository insightRepository;
 
 
     private User getCurrentUser(){

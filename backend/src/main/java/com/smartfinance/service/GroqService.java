@@ -13,13 +13,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GroqService {
 
-    @Value("${groq.api.key}")
+    @Value("${spring.groq.api.key}")
     private String apiKey;
 
-    @Value("${groq.api.url}")
+    @Value("${spring.groq.api.url}")
     private String apiUrl;
 
-    @Value("${groq.api.model}")
+    @Value("${spring.groq.api.model}")
     private String model;
 
     private final RestTemplate restTemplate;

@@ -24,7 +24,7 @@ import { MatProgressSpinner } from "@angular/material/progress-spinner";
     MatProgressBarModule,
     MatSnackBarModule,
     MatProgressSpinner
-],
+  ],
   templateUrl: './insights-list.component.html',
   styleUrl: './insights-list.component.css'
 })
@@ -43,7 +43,7 @@ export class InsightsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   // this.loadInsights()
+    this.loadInsights()
   }
 
   loadInsights() {
@@ -55,11 +55,11 @@ export class InsightsListComponent implements OnInit {
     })
   }
 
-  generateInsights(){
+  generateInsights() {
     this.insightStateService.addInsights().subscribe({
       next: () => {
-         this.snackBar.open('Insighted generated! ', 'Close',
-        { duration: 3000 });
+        this.snackBar.open('Insighted generated! ', 'Close',
+          { duration: 3000 });
       }
     })
   }

@@ -33,7 +33,7 @@ public class ExportService {
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    private byte[] exportTransactionCSV() throws IOException {
+    public byte[] exportTransactionCSV() throws IOException {
         User user = getCurrentUser();
         List<Transaction> transactions = transactionRepository.findByUserIdOrderByDateDesc(user.getId());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -174,8 +174,9 @@ public class ExportService {
             e.printStackTrace();
         } finally {
             document.close();
+
         }
-        return outputStream.toByteArray();  
+        return outputStream.toByteArray();
     }
     private void addTableHeader(PdfPTable table, String... headers) {
         Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 11);

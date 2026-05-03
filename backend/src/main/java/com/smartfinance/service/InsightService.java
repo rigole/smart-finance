@@ -52,6 +52,8 @@ public class InsightService {
                     .build();
         }).collect(Collectors.toList());
         insightRepository.saveAll(insights);
+
+        System.out.println("insigts" + insights);
         
         return insights.stream()
                 .map(this::mapToResponse)
@@ -60,6 +62,7 @@ public class InsightService {
 
     public List<InsightResponse> getInsights(){
         User user = getCurrentUser();
+        System.out.println("User" + user.getId());
         return insightRepository.findByUserIdOrderByGeneratedAtDesc(user.getId())
                 .stream()
                 .map(this::mapToResponse)

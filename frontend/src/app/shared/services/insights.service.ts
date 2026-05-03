@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class InsightsService {
-private baseUrl = 'http://localhost:8080/api/insights';
+  private baseUrl = 'http://localhost:8080/api/insights';
 
   constructor(private http: HttpClient) { }
 
@@ -14,6 +14,6 @@ private baseUrl = 'http://localhost:8080/api/insights';
   }
 
   generateInsights() {
-    return this.http.post(`${this.baseUrl}`, {});
+    return this.http.post(`${this.baseUrl}/generate`, {});
   }
 }

@@ -4,7 +4,7 @@ import { catchError, finalize, tap, throwError } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 
 export class InsightStateService {
@@ -16,18 +16,17 @@ export class InsightStateService {
     readonly insights = this._insights.asReadonly();
     readonly error = this._error.asReadonly();
 
-    constructor(private insightsService: InsightsService) {}
+    constructor(private insightsService: InsightsService) { }
 
-    loadInsights(){
+    loadInsights() {
         this._loading.set(true);
         this._error.set(null);
         return this.insightsService.getAllInsights().pipe(
-            tap((insights:any) => {
-                console.log("insights :", insights)
+            tap((insights: any) => {
                 this._insights.set(insights)
                 this._loading.set(false)
             }),
-               catchError((error: HttpErrorResponse) => {
+            catchError((error: HttpErrorResponse) => {
                 let message = 'insights failed';
                 if (error.status === 0) {
                     message = 'Could not connect to the server';
@@ -46,7 +45,7 @@ export class InsightStateService {
         )
     }
 
-    addInsights(){
+    addInsights() {
         this._loading.set(true)
         this._error.set(null)
 

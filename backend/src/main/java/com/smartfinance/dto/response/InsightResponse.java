@@ -1,5 +1,6 @@
 package com.smartfinance.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,5 +15,6 @@ public class InsightResponse {
     private UUID id;
     private String message;
     private String type;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime generatedAt;
 }

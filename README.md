@@ -236,7 +236,7 @@ ng serve
 - [x] Transaction CRUD API
 - [x] Angular dashboard with charts
 - [x] Budget management
-- [ ] AI-powered insights
+- [x] AI-powered insights
 - [ ] CSV/PDF export
 - [ ] CI/CD pipeline
 - [ ] Deploy to cloud (Railway + Vercel)

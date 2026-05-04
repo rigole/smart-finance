@@ -34,7 +34,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(classes = BackendApplication.class)
+
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Transaction Unit Tests")
 @MockitoSettings(strictness = Strictness.LENIENT)

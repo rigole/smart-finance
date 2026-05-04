@@ -93,7 +93,6 @@ export class TransactionListComponent  {
 
     this.transactionStateService.addTransaction(newTransaction).subscribe({
       next: (transaction) => {
-        this.transactionStateService.addTransaction(transaction);
         this.transactionForm.reset({ type: 'EXPENSE', date: new Date() });
         this.showForm = false;
         this.snackBar.open('Transaction added!', 'Close',
@@ -105,10 +104,34 @@ export class TransactionListComponent  {
     });
   }
 
+
+  exportTransactionsCsv(){
+    this.transactionStateService.exportTransactionsCsv().subscribe({
+      next: () => {
+        this.snackBar.open('Transactions exported to CSV', 'Close',
+          { duration: 2000 });
+      },
+      error: (message) => {
+        this.snackBar.open(message, 'Close', { duration: 3000 });
+      }
+    }); 
+  }
+
+  exportTransactionsPdf(){
+    this.transactionStateService.exportTransactionsPdf().subscribe({
+      next: () => {
+        this.snackBar.open('Transactions exported to PDF', 'Close',
+          { duration: 2000 });
+      },
+      error: (message) => {
+        this.snackBar.open(message, 'Close', { duration: 3000 });
+      }
+    });
+  }
+
   deleteTransaction(id: string) {
     this.transactionStateService.deleteTransaction(id).subscribe({
       next: () => {
-        this.transactionStateService.deleteTransaction(id);
         this.snackBar.open('Transaction deleted ', 'Close',
           { duration: 2000 });
       },

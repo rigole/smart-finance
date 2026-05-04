@@ -9,6 +9,15 @@
             <mat-icon>{{ showForm ? 'close' : 'add' }}</mat-icon>
             {{ showForm ? 'Cancel' : 'New Budget' }}
         </button>
+
+        <button mat-raised-button color="primary" (click)="onExportBudgetCsv()">
+            <mat-icon>file_download</mat-icon>
+            Export CSV
+        </button>
+        <button mat-raised-button color="primary" (click)="onExportBudgetPdf()">
+            <mat-icon>picture_as_pdf</mat-icon>
+            Export PDF
+        </button>
     </div>
 
 

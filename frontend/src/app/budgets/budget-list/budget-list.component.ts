@@ -109,4 +109,30 @@ export class BudgetListComponent {
     this.snackBar.open('Budget deleted', 'Close',
       { duration: 2000 });
   }
+
+  onExportBudgetCsv() {
+    this.budgetStateService.exportBudgetsCsv().subscribe({
+      next: () => {
+        this.snackBar.open('Budgets exported successfully', 'Close',
+          { duration: 3000 });
+      },
+      error: (message) => {
+        this.snackBar.open(message, 'Close',
+          { duration: 3000 });
+      }
+    });
+  }
+
+  onExportBudgetPdf() {
+    this.budgetStateService.exportBudgetsPdf().subscribe({
+      next: () => {
+        this.snackBar.open('Budgets exported successfully', 'Close',
+          { duration: 3000 });
+      },
+      error: (message) => {
+        this.snackBar.open(message, 'Close',
+          { duration: 3000 });
+      }
+    });
+  }
 }

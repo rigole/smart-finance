@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
 import { TransactionService } from "../../shared/services/transaction.service";
 import { catchError, finalize, Observable, tap, throwError } from "rxjs";
+import { ExportService } from "../../shared/services/export.service";
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class TransactionStateService {
     readonly transactions = this._transactions.asReadonly();
     readonly error = this._error.asReadonly();
 
-    constructor(private transactionService: TransactionService) {}
+    constructor(private transactionService: TransactionService, private exportService: ExportService) {}
 
     addTransaction(transaction: any): Observable<any> {
         this._loading.set(true);
@@ -84,6 +85,60 @@ export class TransactionStateService {
         return this.transactionService.deleteTransaction(id).pipe(
             tap(() => {
                 this._transactions.update((transactions) => transactions.filter(t => t.id !== id));
+                this._loading.set(false);
+            }),
+            catchError((error: HttpErrorResponse) => {
+                let message = 'Transaction failed';
+                if (error.status === 0) {
+                    message = 'Could not connect to the server';
+                } else if (error.status === 403) {
+                    message = "Invalid email or password";
+                }
+                else {
+                    message = error.error.message;
+                }
+                this._error.set(message);
+                return throwError(() => message);
+            }),
+            finalize(() => {
+                this._loading.set(false);
+            })
+        );
+    }
+
+    exportTransactionsCsv(): Observable<any> {
+        this._loading.set(true);
+        this._error.set(null);
+
+        return this.exportService.exportTransactionsCsv().pipe(
+            tap(() => {
+                this._loading.set(false);
+            }),
+            catchError((error: HttpErrorResponse) => {
+                let message = 'Transaction failed';
+                if (error.status === 0) {
+                    message = 'Could not connect to the server';
+                } else if (error.status === 403) {
+                    message = "Invalid email or password";
+                }
+                else {
+                    message = error.error.message;
+                }
+                this._error.set(message);
+                return throwError(() => message);
+            }),
+            finalize(() => {
+                this._loading.set(false);
+            })
+        );
+    }
+
+    exportTransactionsPdf(): Observable<any> {
+        this._loading.set(true);
+        this._error.set(null);
+
+        return this.exportService.exportTransactionsPdf().pipe(
+            tap(() => {
                 this._loading.set(false);
             }),
             catchError((error: HttpErrorResponse) => {

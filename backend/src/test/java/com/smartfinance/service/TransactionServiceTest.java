@@ -1,6 +1,7 @@
 package com.smartfinance.service;
 
 
+import com.smartfinance.BackendApplication;
 import com.smartfinance.dto.request.TransactionRequest;
 import com.smartfinance.dto.response.TransactionResponse;
 import com.smartfinance.model.Transaction;
@@ -18,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +34,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest(classes = BackendApplication.class)
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Transaction Unit Tests")
 @MockitoSettings(strictness = Strictness.LENIENT)

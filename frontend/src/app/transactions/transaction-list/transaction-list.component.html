@@ -8,6 +8,14 @@
       <mat-icon>{{ showForm ? 'close' : 'add' }}</mat-icon>
       {{ showForm ? 'Cancel' : 'Add Transaction' }}
     </button>
+    <button mat-raised-button color="accent" (click)="exportTransactionsCsv()">
+      <mat-icon>download</mat-icon>
+      Export CSV
+    </button>
+    <button mat-raised-button color="accent" (click)="exportTransactionsPdf()">
+      <mat-icon>download</mat-icon>
+      Export PDF
+    </button>
   </div>
 
 

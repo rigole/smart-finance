@@ -28,7 +28,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./backend
-        run: mvn test -Dtest=TransactionServiceIntegrationTest -e
+        run: mvn test
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
  

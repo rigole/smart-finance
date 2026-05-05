@@ -1,47 +1,38 @@
 package com.smartfinance.service;
 
-
 import com.smartfinance.BackendApplication;
 import com.smartfinance.dto.request.TransactionRequest;
 import com.smartfinance.dto.response.TransactionResponse;
-import com.smartfinance.model.Transaction;
 import com.smartfinance.model.User;
 import com.smartfinance.repository.CategoryRepository;
 import com.smartfinance.repository.TransactionRepository;
 import com.smartfinance.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = BackendApplication.class)
+@SpringBootTest(
+        classes = BackendApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.NONE
+)
 @ActiveProfiles("test")
-@Transactional
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @DisplayName("TransactionService Integration Tests")
 public class TransactionServiceIntegrationTest {
+
     @Autowired
     private TransactionRepository transactionRepository;
 
@@ -56,28 +47,33 @@ public class TransactionServiceIntegrationTest {
 
     private User testUser;
 
-
     @BeforeEach
-    void setUp(){
-         testUser = User.builder()
-                .id(UUID.randomUUID())
+    void setUp() {
+        transactionRepository.deleteAll();
+        transactionRepository.flush();
+        userRepository.deleteAll();
+        userRepository.flush();
+
+        testUser = User.builder()
                 .email("test@hotmail.com")
                 .fullName("Mock tester User")
                 .password("password")
                 .role("USER")
                 .build();
 
+        testUser = userRepository.saveAndFlush(testUser);
 
-        UsernamePasswordAuthenticationToken auth =
-                new UsernamePasswordAuthenticationToken(
-                        testUser.getEmail(), null, List.of()
+        SecurityContextHolder.getContext()
+                .setAuthentication(
+                        new UsernamePasswordAuthenticationToken(
+                                testUser.getEmail(), null, List.of()
+                        )
                 );
-        SecurityContextHolder.getContext().setAuthentication(auth);
     }
-    @Test
-    @DisplayName("Should save transaction to database")
-    void shouldSaveTransactionToDatabase() {
 
+    @Test
+    @DisplayName("Should save INCOME transaction to database")
+    void shouldSaveTransactionToDatabase() {
         TransactionRequest request = new TransactionRequest();
         request.setAmount(new BigDecimal("500.00"));
         request.setDescription("Monthly salary");
@@ -91,8 +87,6 @@ public class TransactionServiceIntegrationTest {
         assertEquals(new BigDecimal("500.00"), response.getAmount());
         assertEquals("INCOME", response.getType());
         assertEquals("Monthly salary", response.getDescription());
-
-
         assertTrue(transactionRepository
                 .findById(response.getId()).isPresent());
     }
@@ -100,7 +94,6 @@ public class TransactionServiceIntegrationTest {
     @Test
     @DisplayName("Should save EXPENSE transaction to database")
     void shouldSaveExpenseTransactionToDatabase() {
-
         TransactionRequest request = new TransactionRequest();
         request.setAmount(new BigDecimal("150.00"));
         request.setDescription("Grocery shopping");
@@ -110,14 +103,11 @@ public class TransactionServiceIntegrationTest {
         TransactionResponse response =
                 transactionService.createTransaction(request);
 
-
         assertNotNull(response.getId());
         assertEquals("EXPENSE", response.getType());
         assertTrue(transactionRepository
                 .findById(response.getId()).isPresent());
     }
-
-
 
     @Test
     @DisplayName("Should get all user transactions from database")
@@ -140,10 +130,8 @@ public class TransactionServiceIntegrationTest {
     @Test
     @DisplayName("Should return empty list when user has no transactions")
     void shouldReturnEmptyListWhenNoTransactions() {
-
         List<TransactionResponse> responses =
                 transactionService.getAllTransactions(testUser);
-
 
         assertNotNull(responses);
         assertTrue(responses.isEmpty());
@@ -152,7 +140,6 @@ public class TransactionServiceIntegrationTest {
     @Test
     @DisplayName("Should delete transaction from database")
     void shouldDeleteTransactionFromDatabase() {
-
         TransactionRequest request = new TransactionRequest();
         request.setAmount(new BigDecimal("100.00"));
         request.setDescription("To be deleted");
@@ -171,8 +158,6 @@ public class TransactionServiceIntegrationTest {
                 .findById(created.getId()).isPresent());
     }
 
-
-
     @Test
     @DisplayName("Should update transaction in database")
     void shouldUpdateTransactionInDatabase() {
@@ -185,12 +170,12 @@ public class TransactionServiceIntegrationTest {
         TransactionResponse created =
                 transactionService.createTransaction(request);
 
-
         TransactionRequest updateRequest = new TransactionRequest();
         updateRequest.setAmount(new BigDecimal("200.00"));
         updateRequest.setDescription("Updated");
         updateRequest.setType("INCOME");
         updateRequest.setDate(LocalDate.now());
+
         TransactionResponse updated =
                 transactionService.updateTransaction(
                         created.getId(), updateRequest, testUser);
@@ -201,4 +186,10 @@ public class TransactionServiceIntegrationTest {
         assertEquals("INCOME", updated.getType());
     }
 
+    @AfterEach
+    void tearDown() {
+        transactionRepository.deleteAll();
+        userRepository.deleteAll();
+        SecurityContextHolder.clearContext();
+    }
 }

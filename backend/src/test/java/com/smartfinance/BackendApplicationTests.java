@@ -1,6 +1,5 @@
-package smart_finance_backend;
+package com.smartfinance;
 
-import com.smartfinance.BackendApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

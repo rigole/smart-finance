@@ -20,7 +20,6 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-
     @Column(nullable = false)
     private String category;
 

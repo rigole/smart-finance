@@ -237,7 +237,7 @@ ng serve
 - [x] Angular dashboard with charts
 - [x] Budget management
 - [x] AI-powered insights
-- [ ] CSV/PDF export
+- [x] CSV/PDF export
 - [ ] CI/CD pipeline
 - [ ] Deploy to cloud (Railway + Vercel)
 

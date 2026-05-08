@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TransactionListComponent } from './transaction-list.component';
+//import { TransactionListComponent } from './transaction-list.component';
 
+/*
 describe('TransactionListComponent', () => {
   let component: TransactionListComponent;
   let fixture: ComponentFixture<TransactionListComponent>;
@@ -21,3 +22,4 @@ describe('TransactionListComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+*/

@@ -84,6 +84,8 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing", "@angular/localize/init"],
             "tsConfig": "tsconfig.spec.json",
+            "browsers": "ChromeHeadless",
+            "karmaConfig": "karma.conf.js",
             "assets": [{ "glob": "**/*", "input": "public" }],
             "styles": [
               "@angular/material/prebuilt-themes/cyan-orange.css",

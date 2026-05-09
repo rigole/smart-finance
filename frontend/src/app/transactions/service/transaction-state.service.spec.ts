@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { TransactionStateService } from './transaction-state.services'
 import { TransactionService } from "../../shared/services/transaction.service";
 import { provideHttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 
 
@@ -33,41 +33,43 @@ describe('TransactionStateService', () => {
     }
   ];
 
-  
-    beforeEach(() => {
-      const spy = jasmine.createSpyObj('',[
-          'getTransactions',
-          'createTransaction',
-          'updateTransaction',
-          'deleteTransaction'
-      ])
 
-      TestBed.configureTestingModule({
-        providers:[
-          TransactionStateService,
-          { provide: TransactionService, useValue: spy },
-          provideHttpClient()
-        ]
-      });
-      service = TestBed.inject(TransactionStateService);
-      transactionServiceSpy = TestBed.inject(TransactionService) as jasmine.SpyObj<TransactionService>
-    })
+  beforeEach(() => {
+    const spy = jasmine.createSpyObj('', [
+      'getTransactions',
+      'addTransaction',
+      'updateTransaction',
+      'deleteTransaction'
+    ])
 
-    it('should be created', () => {
-      expect(service).toBeTruthy();
-    })
-
-    it('should have empty transactions initially',() => {
-      expect(service.transactions()).toEqual([])
+    TestBed.configureTestingModule({
+      providers: [
+        TransactionStateService,
+        { provide: TransactionService, useValue: spy },
+        provideHttpClient()
+      ]
     });
+    service = TestBed.inject(TransactionStateService);
+    transactionServiceSpy = TestBed.inject(TransactionService) as jasmine.SpyObj<TransactionService>
 
-    it('Should have loading initially', () => {
-      expect(service.loading()).toBeFalse();
-    })
+  })
 
-    it('should have no error initially', () => {
-      expect(service.error()).toBe(null)
-    })
+  it('should be created', () => {
+
+    expect(service).toBeTruthy();
+  })
+
+  it('should have empty transactions initially', () => {
+    expect(service.transactions()).toEqual([])
+  });
+
+  it('Should have loading initially', () => {
+    expect(service.loading()).toBeFalse();
+  })
+
+  it('should have no error initially', () => {
+    expect(service.error()).toBe(null)
+  })
 
   it('should load transactions successfully', () => {
     transactionServiceSpy.getTransactions.and.returnValue(of(testTransactions));
@@ -82,14 +84,32 @@ describe('TransactionStateService', () => {
     transactionServiceSpy.getTransactions.and.returnValue(of(testTransactions))
 
     let loadingDuringCall = false;
-     transactionServiceSpy.getTransactions.and.callFake(() => {
+    transactionServiceSpy.getTransactions.and.callFake(() => {
       loadingDuringCall = service.loading()
       return of(testTransactions)
-     });
+    });
 
-     service.getTransactions().subscribe()
-     expect(loadingDuringCall).toBeTrue()
-     expect(service.loading()).toBeFalse()
+    service.getTransactions().subscribe()
+    expect(loadingDuringCall).toBeTrue()
+    expect(service.loading()).toBeFalse()
   })
+
+
+  it('should add transaction successfully', () => {
+    transactionServiceSpy.addTransaction.and.returnValue(of(testTransactions[0]))
+    service.addTransaction(testTransaction).subscribe()
+    expect(service.transactions()[0]).toEqual(testTransaction)
+    expect(service.loading()).toBeFalse()
+    expect(service.error()).toBeNull()
+  })
+
+  it('should delete transaction successfully', () => {
+    transactionServiceSpy.deleteTransaction.and.returnValue(of({}));
+    service.deleteTransaction(testTransaction.id).subscribe();
+    expect(service.transactions().length).toBe(0);
+    expect(service.loading()).toBeFalse()
+    expect(service.error()).toBeNull()
+  })
+
   
 });

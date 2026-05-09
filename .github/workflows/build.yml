@@ -35,6 +35,13 @@ jobs:
       - name:  Build with Maven
         working-directory: ./backend
         run: mvn clean install -DskipTests
+
+      - name:  Upload Backend test reports
+        uses: actions/upload-artifact@v4
+        if: always() 
+        with:
+          name: backend-test-reports
+          path: backend/target/surefire-reports/
  
       - name:  Upload JAR artifact
         uses: actions/upload-artifact@v4

@@ -1,6 +1,3 @@
-process.env.CHROME_BIN = 
-  'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe';
-
 module.exports = function(config) {
   config.set({
     basePath: '',
@@ -19,9 +16,16 @@ module.exports = function(config) {
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/frontend'),
       subdir: '.',
-      reporters: [{ type: 'html' }, { type: 'text-summary' }]
+      reporters: [
+        { type: 'html' },
+        { type: 'text-summary' }
+      ]
     },
     reporters: ['progress', 'kjhtml'],
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_INFO,
+    autoWatch: true,
     browsers: ['ChromeHeadless'],
     customLaunchers: {
       ChromeHeadless: {
@@ -30,10 +34,12 @@ module.exports = function(config) {
           '--headless',
           '--no-sandbox',
           '--disable-gpu',
+          '--disable-dev-shm-usage',
           '--remote-debugging-port=9222'
         ]
       }
     },
+    singleRun: false,
     restartOnFileChange: true
   });
 };

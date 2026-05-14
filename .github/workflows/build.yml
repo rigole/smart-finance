@@ -79,7 +79,7 @@ jobs:
           name: frontend-build
           path: frontend/dist/
 
-      - name: 🧪 Run Frontend Tests
+      - name: Run Frontend Tests
         working-directory: ./frontend
         run: npx ng test --watch=false --browsers=ChromeHeadless --no-progress
         env:

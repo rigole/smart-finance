@@ -12,9 +12,12 @@
 ---
 
 ## 📸 Screenshots
+
 ![alt text](image.png)
 ![alt text](image-2.png)
 ![alt text](image-1.png)
+![alt text](image-3.png)
+
 > _Coming soon — dashboard, transactions page, and AI insights view_
 
 ---
@@ -53,14 +56,14 @@
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|---|---|
+| Layer        | Technology                                          |
+| ------------ | --------------------------------------------------- |
 | **Frontend** | Angular 17+, TypeScript, Chart.js, Angular Material |
-| **Backend** | Spring Boot 3, Spring Security, JWT, JPA/Hibernate |
-| **Database** | PostgreSQL 15, Flyway (migrations) |
-| **AI** | OpenAI API / Rule-based insight engine |
-| **DevOps** | Docker, Docker Compose, GitHub Actions |
-| **Testing** | JUnit 5 (backend), Jasmine/Karma (frontend) |
+| **Backend**  | Spring Boot 3, Spring Security, JWT, JPA/Hibernate  |
+| **Database** | PostgreSQL 15, Flyway (migrations)                  |
+| **AI**       | OpenAI API / Rule-based insight engine              |
+| **DevOps**   | Docker, Docker Compose, GitHub Actions              |
+| **Testing**  | JUnit 5 (backend), Jasmine/Karma (frontend)         |
 
 ---
 
@@ -159,6 +162,7 @@ smart-finance/
 ### Prerequisites
 
 Make sure you have the following installed:
+
 - [Docker](https://www.docker.com/) & Docker Compose
 - [Node.js](https://nodejs.org/) 18+ & npm
 - [Java](https://adoptium.net/) 17+
@@ -199,18 +203,18 @@ ng serve
 
 ## 🔌 API Endpoints
 
-| Method | Endpoint | Description | Auth |
-|---|---|---|---|
-| POST | `/api/auth/register` | Register a new user | 
-| POST | `/api/auth/login` | Login & get JWT token |
-| GET | `/api/transactions` | Get all transactions |
-| POST | `/api/transactions` | Create a transaction | 
-| PUT | `/api/transactions/{id}` | Update a transaction | 
-| DELETE | `/api/transactions/{id}` | Delete a transaction | 
-| GET | `/api/budgets` | Get all budgets | 
-| POST | `/api/budgets` | Create a budget | 
-| GET | `/api/insights` | Get AI insights | 
-| GET | `/api/dashboard/summary` | Get dashboard stats | 
+| Method | Endpoint                 | Description           | Auth |
+| ------ | ------------------------ | --------------------- | ---- |
+| POST   | `/api/auth/register`     | Register a new user   |
+| POST   | `/api/auth/login`        | Login & get JWT token |
+| GET    | `/api/transactions`      | Get all transactions  |
+| POST   | `/api/transactions`      | Create a transaction  |
+| PUT    | `/api/transactions/{id}` | Update a transaction  |
+| DELETE | `/api/transactions/{id}` | Delete a transaction  |
+| GET    | `/api/budgets`           | Get all budgets       |
+| POST   | `/api/budgets`           | Create a budget       |
+| GET    | `/api/insights`          | Get AI insights       |
+| GET    | `/api/dashboard/summary` | Get dashboard stats   |
 
 > Full API documentation available at `/swagger-ui.html` when running locally.
 
@@ -258,6 +262,7 @@ Contributions, issues and feature requests are welcome!
 ## 👨‍💻 Author
 
 **Placide FOLEU**
+
 - LinkedIn: [linkedin.com/in/placide-rigole-foleu](https://www.linkedin.com/in/placide-rigole-foleu/)
 - GitHub: [@rigole](https://github.com/rigole)
 - Email: foplacide@gmail.com

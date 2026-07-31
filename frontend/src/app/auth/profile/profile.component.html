@@ -1,17 +1,14 @@
 <mat-sidenav-container class="sidenav-container">
-
-
   <mat-sidenav mode="side" opened class="sidenav">
-
-   
     <div class="brand">
-      <span class="brand-logo"><mat-icon>account_balance_wallet</mat-icon></span>
+      <span class="brand-logo"
+        ><mat-icon>account_balance_wallet</mat-icon></span
+      >
       <span class="brand-name">Smart Finance</span>
     </div>
 
     <mat-divider></mat-divider>
 
-    
     <div class="user-info">
       <div class="avatar">{{ userName.charAt(0).toUpperCase() }}</div>
       <div class="user-details">
@@ -22,13 +19,14 @@
 
     <mat-divider></mat-divider>
 
-
     <mat-nav-list class="nav-list">
-      <a mat-list-item
-         *ngFor="let item of navItems"
-         [routerLink]="item.route"
-         routerLinkActive="active-link"
-         [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        mat-list-item
+        *ngFor="let item of navItems"
+        [routerLink]="item.route"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         <span matListItemTitle>{{ item.label }}</span>
       </a>
@@ -37,17 +35,12 @@
     <div class="sidenav-footer">
       <mat-divider></mat-divider>
       <button mat-list-item class="logout-btn" (click)="logout()">
-        <mat-icon>logout</mat-icon>
         <span>Logout</span>
       </button>
     </div>
-
   </mat-sidenav>
 
-
   <mat-sidenav-content class="main-content">
-
-    
     <mat-toolbar color="primary" class="toolbar">
       <span>Smart Finance</span>
       <span class="spacer"></span>
@@ -62,11 +55,8 @@
       </mat-menu>
     </mat-toolbar>
 
-    
     <div class="page-content">
       <router-outlet></router-outlet>
     </div>
-
   </mat-sidenav-content>
-
 </mat-sidenav-container>
